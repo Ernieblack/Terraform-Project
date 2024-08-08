@@ -209,6 +209,7 @@ resource "aws_instance" "TF-Server-1" {
   availability_zone = "eu-west-1a"
   subnet_id = aws_subnet.TF-Pub-1.id
   security_groups = [aws_security_group.TF-SG.id]
+  user_data = file("${path.module}/user_data.tpl")
 
   tags = {
     Name = "TF-Server-1"
