@@ -13,6 +13,29 @@ variable "vpc-cidr" {
   
 }
 
+variable "instance_tenancy" {
+    type = string
+    description = "vpc tenancy"
+    default = "default"
+}
+
+
+variable "dns-hostnames" {
+    type = bool
+    description = "vpc dns hostnames"
+    default = true 
+}
+
+
+variable "dns-support" {
+    type = bool
+    description = "vpc dns support"
+    default = true
+}
+
+
+
+
 variable "az" {
     type = string
     description = "availability-zone"
