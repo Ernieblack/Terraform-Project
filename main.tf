@@ -200,16 +200,24 @@ resource "aws_security_group" "TF-SG" {
 }
 
 
+# Creating keypair for EC2
+
+resource "aws_key_pair" "March-Key-pair" {
+  key_name   = "March-key-pair"
+  public_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDe83wX7kkcuC9ZcUODBvhzUo0GTgn3BvbnfIftXqmfoml+kkJI/79FebtQOgNqnYo4t2x7dWZg/SmPWmx3SXYxNVKYkSUKhnnKKCTgraFLN5w8MI1DpuqyHo1Gj2nZadTcO4fjAx39u0JyDQJ8BZLjQhruFu1OxqfNDP8o3iy8+BW9vzA31xSIWExKLWkFeS/L49iaf3AuzWJZig0ECv0SeJpv4M41kH9XTIUtRV1lv++J1YTVBs5+DB10bPBpNJypoKuEgAaiOb4l7rzoj/kaprLC+FmNq8qouiDJPDyB2lLzuqFvhYZFREtr1cPdLjx49E+Gx39CyuIXz7AMZQB9 tilly@LAPTOP-9M5I33N7"
+}
+
 
 # CREATING TWO EC2
 
 resource "aws_instance" "TF-Server-1" {
-  ami           = "ami-0a2202cf4c36161a1"
-  instance_type = "t2.micro"
+  ami               = "ami-0a2202cf4c36161a1"
+  instance_type     = "t2.micro"
   availability_zone = "eu-west-1a"
-  subnet_id = aws_subnet.TF-Pub-1.id
-  security_groups = [aws_security_group.TF-SG.id]
-  user_data = file("${path.module}/user_data.tpl")
+  subnet_id         = aws_subnet.TF-Pub-1.id
+  key_name          = "March-key-pair"
+  security_groups   = [aws_security_group.TF-SG.id]
+  user_data         = file("${path.module}/user_data.tpl")
 
   tags = {
     Name = "TF-Server-1"
@@ -217,11 +225,11 @@ resource "aws_instance" "TF-Server-1" {
 }
 
 resource "aws_instance" "TF-Server-2" {
-  ami           = "ami-0a2202cf4c36161a1"
-  instance_type = "t2.micro"
+  ami               = "ami-0a2202cf4c36161a1"
+  instance_type     = "t2.micro"
   availability_zone = "eu-west-1b"
-  subnet_id = aws_subnet.TF-Pub-2.id
-  security_groups = [aws_security_group.TF-SG.id]
+  subnet_id         = aws_subnet.TF-Pub-2.id
+  security_groups   = [aws_security_group.TF-SG.id]
 
   tags = {
     Name = "TF-Server-2"
